@@ -691,11 +691,9 @@ function setupSpawnMarker(item) {
 	optimized: false,
     center: circleCenter,
     radius: 5, // 10 miles in metres
-	fillOpacity: 0.75,
-    fillColor: getColorByDate(item.disappear_time),
-    strokeColor: getColorByDate(item.disappear_time + 900000),
-    strokeOpacity: 0.99,
-    strokeWeight: 2
+	fillOpacity: 1,
+    fillColor: getSpawnColor(item.disappear_time),
+    strokeWeight: 0
   });
   
   marker.infoWindow = new google.maps.InfoWindow({
@@ -710,6 +708,42 @@ function setupSpawnMarker(item) {
   addListeners(marker);
 
   return marker;
+}
+
+function getSpawnColor(value) {
+
+	var diff = 60 - (Date.now() - value + 900000) / 1000 / 60;
+	var hue = 200;
+	
+	// 0..5
+	if (diff > 0) hue = (200 - diff * 33);
+	
+	// 5..10
+	if (diff > 3) hue = (100 - (diff - 3) * 16.66);
+	
+	// 10..15
+	if (diff > 6) hue = (50 - (diff - 6) * 16.66);
+	
+	// 15..45
+	if (diff > 9) hue = 0;
+	
+	// 45..60
+	if (diff > 45) hue = 200;
+	
+	
+	// final 
+	hue = hue.toString(10);
+	console.log([diff , " -- " , hue].join(""));
+
+	// 0m to spawn - blue
+	// 5m to spawn - green
+	// 10m to spawn - yellow
+	// 15m to spawn - red
+	// during spawn - blue
+	// 5m to despawn - purple
+	
+	return ["hsl(", hue, ",75%,50%)"].join("");
+
 }
 
 
