@@ -823,7 +823,6 @@ function loadRawData() {
 }
 
 function processPokemons(i, item) {
-	console.log(item);
   if (!Store.get('showPokemon')) {
     return false; // in case the checkbox was unchecked in the meantime.
   }
@@ -840,7 +839,6 @@ function processPokemons(i, item) {
 }
 
 function processPokestops(i, item) {
-	console.log(item);
   if (!Store.get('showPokestops')) {
     return false;
   }
@@ -872,7 +870,16 @@ function processSpawn(i, item) {
   if (!Store.get('showSpawns')) {
     return false;
   }
+  
 console.log(item);
+
+	if (!(item.spawnpoint_id in map_data.spawns)) {
+		if (item.marker) item.marker.setMap(null);
+		item.marker = setupSpawnMarker(item);
+		map_data.spawns[item.spawnpoint_id] = item;
+	}
+
+/*
   if (map_data.spawns[item.encounter_id] == null) { // add marker to map and item to dict
     // add marker to map and item to dict
     if (item.marker) item.marker.setMap(null);
@@ -880,6 +887,7 @@ console.log(item);
     //item.marker = setupSpawnMarker(item);
     map_data.spawns[item.encounter_id] = item;
   }
+ */
 console.log(item);
 }
 
