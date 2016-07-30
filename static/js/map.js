@@ -643,6 +643,22 @@ function setupPokestopMarker(item) {
   return marker;
 }
 
+function setupSpawnMarker(item) {
+  var imagename = "Pstop";
+  var marker = new google.maps.Marker({
+    position: {
+      lat: item.latitude,
+      lng: item.longitude,
+    },
+    map: map,
+    zIndex: 2,
+    optimized: false,
+    icon: 'static/forts/' + imagename + '.png',
+  });
+
+  return marker;
+}
+
 function setupPokespawnMarker(item) {
   var imagename = "Pstop";
   var marker = new google.maps.Marker({
