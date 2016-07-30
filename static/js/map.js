@@ -524,7 +524,7 @@ function spawnLabel(spawnpoint_id, disappear_time, latitude, longitude) {
 
 	var disappear_time = new Date(disappear_time);
 	var current_date = new Date();
-	var expire_date = new Date(current_date.getTime() + disappear_time.getTime());
+	var expire_date = new Date(current_date.getTime() + disappear_time.getTime() + 3600);
 	var expire_time = expire_date.getTime();
 	
 	console.log(spawnpoint_id);
@@ -930,16 +930,6 @@ function processSpawn(i, item) {
 		map_data.spawns[item.spawnpoint_id] = item;
 	}
 
-/*
-  if (map_data.spawns[item.encounter_id] == null) { // add marker to map and item to dict
-    // add marker to map and item to dict
-    if (item.marker) item.marker.setMap(null);
-	console.log(item);
-    //item.marker = setupSpawnMarker(item);
-    map_data.spawns[item.encounter_id] = item;
-  }
- */
-console.log(item);
 }
 
 function processLuredPokemon(i, item) {
