@@ -870,7 +870,7 @@ function processSpawn(i, item) {
   if (!Store.get('showSpawns')) {
     return false;
   }
-
+console.log(item);
   if (map_data.spawns[item.spawnpoint_id] == null) { // add marker to map and item to dict
     // add marker to map and item to dict
     if (item.marker) item.marker.setMap(null);
