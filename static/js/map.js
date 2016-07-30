@@ -642,6 +642,30 @@ function setupPokestopMarker(item) {
   return marker;
 }
 
+function setupPokespawnMarker(item) {
+  var imagename = "Pstop";
+  var marker = new google.maps.Marker({
+    position: {
+      lat: item.latitude,
+      lng: item.longitude,
+    },
+    map: map,
+    zIndex: 3,
+    optimized: false,
+    icon: 'static/forts/' + imagename + '.png',
+  });
+
+  /*
+  marker.infoWindow = new google.maps.InfoWindow({
+    content: pokestopLabel(!!item.lure_expiration, item.last_modified, item.active_pokemon_id, item.latitude + .003, item.longitude + .003),
+    disableAutoPan: true
+  });
+  */
+
+  addListeners(marker);
+  return marker;
+}
+
 function getColorByDate(value) {
   //Changes the color from red to green over 15 mins
   var diff = (Date.now() - value) / 1000 / 60 / 15;
@@ -850,7 +874,7 @@ function processPokespawn(i, item) {
   if (map_data.spawns[item.spawnpoint_id] == null) { // add marker to map and item to dict
     // add marker to map and item to dict
     if (item.marker) item.marker.setMap(null);
-    item.marker = setupPokestopMarker(item);
+    item.marker = setupPokespawnMarker(item);
     map_data.spawns[item.spawnpoint_id] = item;
   }
 }
