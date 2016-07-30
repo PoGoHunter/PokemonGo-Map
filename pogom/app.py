@@ -12,7 +12,7 @@ from s2sphere import *
 from pogom.utils import get_args
 
 from . import config
-from .models import Pokemon, Gym, Pokestop, ScannedLocation
+from .models import Pokemon, Gym, Pokestop, Pokespawn, ScannedLocation
 
 log = logging.getLogger(__name__)
 compress = Compress()
