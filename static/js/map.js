@@ -826,7 +826,10 @@ function processPokemons(i, item) {
   if (!Store.get('showPokemon')) {
     return false; // in case the checkbox was unchecked in the meantime.
   }
-
+  
+console.log("Pokemons");
+console.log(item);
+console.log(map_data.pokemons);
   if (!(item.encounter_id in map_data.pokemons) &&
     excludedPokemon.indexOf(item.pokemon_id) < 0) {
     // add marker to map and item to dict
@@ -870,12 +873,14 @@ function processSpawn(i, item) {
   if (!Store.get('showSpawns')) {
     return false;
   }
-  
+
+console.log("Spawns");
 console.log(item);
+console.log(map_data.pokemons);
 
 	if (!(item.spawnpoint_id in map_data.spawns)) {
-		if (item.marker) item.marker.setMap(null);
-		item.marker = setupSpawnMarker(item);
+		// if (item.marker) item.marker.setMap(null);
+		//item.marker = setupSpawnMarker(item);
 		map_data.spawns[item.spawnpoint_id] = item;
 	}
 
