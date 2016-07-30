@@ -525,7 +525,7 @@ function spawnLabel(spawnpoint_id, disappear_time, latitude, longitude) {
 	console.log(spawnpoint_id);
 	console.log(disappear_time);
 	
-	var disappear_time = disappear_time + 3600 + 3600;
+	var disappear_time = disappear_time + 2700000;
 	var disappear_date = new Date(disappear_time);
 	
   var str;
