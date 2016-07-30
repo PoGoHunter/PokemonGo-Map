@@ -691,15 +691,15 @@ function setupSpawnMarker(item) {
 	optimized: false,
     center: circleCenter,
     radius: 10, // 10 miles in metres
-	fillOpacity: 0.5,
+	fillOpacity: 0.75,
     fillColor: getColorByDate(item.disappear_time),
     strokeColor: getColorByDate(item.disappear_time + 900000),
-    strokeOpacity: 0.8,
+    strokeOpacity: 0.99,
     strokeWeight: 2
   });
   
   marker.infoWindow = new google.maps.InfoWindow({
-    content: spawnLabel(item.spawnpoint_id, item.disappear_time, item.latitude + .003, item.longitude + .003),
+    content: spawnLabel(item.spawnpoint_id, item.disappear_time, item.latitude + .03, item.longitude + .003),
     disableAutoPan: true
   });
 
