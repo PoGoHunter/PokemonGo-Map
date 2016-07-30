@@ -842,6 +842,19 @@ function processPokestops(i, item) {
   }
 }
 
+function processPokespawn(i, item) {
+  if (!Store.get('showSpawns')) {
+    return false;
+  }
+
+  if (map_data.spawns[item.spawnpoint_id] == null) { // add marker to map and item to dict
+    // add marker to map and item to dict
+    if (item.marker) item.marker.setMap(null);
+    item.marker = setupPokestopMarker(item);
+    map_data.spawns[item.spawnpoint_id] = item;
+  }
+}
+
 function processLuredPokemon(i, item) {
   if (!Store.get('showPokemon')) {
     return false;
@@ -923,11 +936,13 @@ function processScanned(i, item) {
 
 function updateMap() {
   loadRawData().done(function(result) {
+    $.each(result.spawns, processPokespawn);
     $.each(result.pokemons, processPokemons);
     $.each(result.pokestops, processPokestops);
     $.each(result.pokestops, processLuredPokemon);
     $.each(result.gyms, processGyms);
     $.each(result.scanned, processScanned);
+    showInBoundsMarkers(map_data.spawns);
     showInBoundsMarkers(map_data.pokemons);
     showInBoundsMarkers(map_data.lure_pokemons);
     showInBoundsMarkers(map_data.gyms);
