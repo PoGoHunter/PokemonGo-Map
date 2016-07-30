@@ -172,13 +172,9 @@ class Pokestop(BaseModel):
         return pokestops
 
 class Pokespawn(BaseModel):
-    pokestop_id = CharField(primary_key=True, max_length=50)
-    enabled = BooleanField()
+    spawnpoint_id = CharField(index=True)
     latitude = DoubleField()
     longitude = DoubleField()
-    last_modified = DateTimeField(index=True)
-    lure_expiration = DateTimeField(null=True, index=True)
-    active_pokemon_id = IntegerField(null=True)
 
     class Meta:
         indexes = ((('latitude', 'longitude'), False),)
@@ -186,26 +182,28 @@ class Pokespawn(BaseModel):
     @classmethod
     def get_spawns(cls, swLat, swLng, neLat, neLng):
         if swLat is None or swLng is None or neLat is None or neLng is None:
-            query = (Pokestop
+            query = (Pokemon
                      .select()
+                     .where((Pokemon.disappear_time > (datetime.utcnow() - 2700)) &
                      .dicts())
         else:
-            query = (Pokestop
+            query = (Pokemon
                      .select()
-                     .where((Pokestop.latitude >= swLat) &
-                            (Pokestop.longitude >= swLng) &
-                            (Pokestop.latitude <= neLat) &
-                            (Pokestop.longitude <= neLng))
+                     .where((Pokemon.disappear_time > (datetime.utcnow() - 2700)) &
+                            (Pokemon.latitude >= swLat) &
+                            (Pokemon.longitude >= swLng) &
+                            (Pokemon.latitude <= neLat) &
+                            (Pokemon.longitude <= neLng))
                      .dicts())
 
-        pokestops = []
+        pokespawns = []
         for p in query:
             if args.china:
                 p['latitude'], p['longitude'] = \
                     transform_from_wgs_to_gcj(p['latitude'], p['longitude'])
-            pokestops.append(p)
+            pokespawns.append(p)
 
-        return pokestops
+        return pokespawns
 
 
 class Gym(BaseModel):
