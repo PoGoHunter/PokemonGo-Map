@@ -690,7 +690,7 @@ function setupSpawnMarker(item) {
 	zIndex: 2,
 	optimized: false,
     center: circleCenter,
-    radius: 10, // 10 miles in metres
+    radius: 5, // 10 miles in metres
 	fillOpacity: 0.75,
     fillColor: getColorByDate(item.disappear_time),
     strokeColor: getColorByDate(item.disappear_time + 900000),
@@ -994,17 +994,17 @@ function processScanned(i, item) {
 
 function updateMap() {
   loadRawData().done(function(result) {
+    $.each(result.spawns, processSpawn);
     $.each(result.pokemons, processPokemons);
     $.each(result.pokestops, processPokestops);
     $.each(result.pokestops, processLuredPokemon);
     $.each(result.gyms, processGyms);
-    $.each(result.spawns, processSpawn);
     $.each(result.scanned, processScanned);
+    showInBoundsMarkers(map_data.spawns);
     showInBoundsMarkers(map_data.pokemons);
     showInBoundsMarkers(map_data.lure_pokemons);
     showInBoundsMarkers(map_data.gyms);
     showInBoundsMarkers(map_data.pokestops);
-    showInBoundsMarkers(map_data.spawns);
     showInBoundsMarkers(map_data.scanned);
     clearStaleMarkers();
     if ($("#stats").hasClass("visible")) {
