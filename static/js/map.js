@@ -525,11 +525,8 @@ function spawnLabel(spawnpoint_id, disappear_time, latitude, longitude) {
 	console.log(spawnpoint_id);
 	console.log(disappear_time);
 	
-	var disappear_time = new Date(disappear_time + 3600);
-	var current_date = new Date();
-	var expire_date = new Date(current_date.getTime() - disappear_time.getTime());
-	var expire_time = expire_date.getTime();
-
+	var disappear_time = disappear_time + 3600;
+	var disappear_date = new Date(disappear_time);
 	
   var str;
     str = `
@@ -540,8 +537,8 @@ function spawnLabel(spawnpoint_id, disappear_time, latitude, longitude) {
         Location: ${latitude.toFixed(6)}, ${longitude.toFixed(7)}
       </div>
 	  <div>
-        Spawns at ${pad(expire_date.getHours())}:${pad(expire_date.getMinutes())}:${pad(expire_date.getSeconds())}
-        <span class='label-countdown' disappears-at='${expire_time}'>(00m00s)</span>
+        Respawns at ${pad(disappear_date.getHours())}:${pad(disappear_date.getMinutes())}:${pad(disappear_date.getSeconds())}
+        <span class='label-countdown' disappears-at='${disappear_time}'>(00m00s)</span>
       </div>
       <div>
         <a href='https://www.google.com/maps/dir/Current+Location/${latitude},${longitude}' target='_blank' title='View in Maps'>Get directions</a>
