@@ -876,7 +876,7 @@ function processSpawn(i, item) {
 
 console.log("Spawns");
 console.log(item);
-console.log(map_data.pokemons);
+console.log(map_data.spawns);
 
 	if (!(item.spawnpoint_id in map_data.spawns)) {
 		// if (item.marker) item.marker.setMap(null);
