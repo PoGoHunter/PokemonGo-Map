@@ -527,6 +527,8 @@ function spawnLabel(spawnpoint_id, disappear_time, latitude, longitude) {
 	var expire_date = new Date(current_date.getTime() + disappear_time);
 	var expire_time = expire_date.getTime();
 	
+	console.log(spawnpoint_id);
+	console.log(disappear_time);
 	
   var str;
     str = `
@@ -878,9 +880,6 @@ function processPokemons(i, item) {
     return false; // in case the checkbox was unchecked in the meantime.
   }
   
-console.log("Pokemons");
-console.log(item);
-console.log(map_data.pokemons);
   if (!(item.encounter_id in map_data.pokemons) &&
     excludedPokemon.indexOf(item.pokemon_id) < 0) {
     // add marker to map and item to dict
@@ -924,10 +923,6 @@ function processSpawn(i, item) {
   if (!Store.get('showSpawns')) {
     return false;
   }
-
-console.log("Spawns");
-console.log(item);
-console.log(map_data.spawns);
 
 	if (!(item.spawnpoint_id in map_data.spawns)) {
 		if (item.marker) item.marker.setMap(null);
