@@ -331,6 +331,7 @@ function createSearchMarker() {
 }
 
 function initSidebar() {
+  $('#spawn-switch').prop('checked', Store.get('showSpawns'));
   $('#gyms-switch').prop('checked', Store.get('showGyms'));
   $('#pokemon-switch').prop('checked', Store.get('showPokemon'));
   $('#pokestops-switch').prop('checked', Store.get('showPokestops'));
@@ -1258,6 +1259,7 @@ $(function() {
   }
 
   // Setup UI element interactions
+  $('#spawn-switch').change(buildSwitchChangeListener(map_data, ["spawns"], "showSpawns"));
   $('#gyms-switch').change(buildSwitchChangeListener(map_data, ["gyms"], "showGyms"));
   $('#pokemon-switch').change(buildSwitchChangeListener(map_data, ["pokemons", "lure_pokemons"], "showPokemon"));
   $('#scanned-switch').change(buildSwitchChangeListener(map_data, ["scanned"], "showScanned"));
