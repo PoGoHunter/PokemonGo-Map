@@ -123,6 +123,10 @@ var StoreOptions = {
     default: false,
     type: StoreTypes.Boolean
   },
+  showSpawns: {
+    default: false,
+    type: StoreTypes.Boolean
+  },
   showPokemon: {
     default: true,
     type: StoreTypes.Boolean
@@ -753,6 +757,7 @@ function showInBoundsMarkers(markers) {
 function loadRawData() {
   var loadPokemon = Store.get('showPokemon');
   var loadGyms = Store.get('showGyms');
+  var loadSpawns = Store.get('showSpawns');
   var loadPokestops = Store.get('showPokestops') || Store.get('showPokemon');
   var loadScanned = Store.get('showScanned');
 
@@ -770,6 +775,7 @@ function loadRawData() {
     data: {
       'pokemon': loadPokemon,
       'pokestops': loadPokestops,
+      'spawns': loadSpawns,
       'gyms': loadGyms,
       'scanned': loadScanned,
       'swLat': swLat,
