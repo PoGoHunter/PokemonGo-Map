@@ -871,12 +871,14 @@ function processSpawn(i, item) {
     return false;
   }
 console.log(item);
-  if (map_data.spawns[item.spawnpoint_id] == null) { // add marker to map and item to dict
+  if (map_data.spawns[item.encounter_id] == null) { // add marker to map and item to dict
     // add marker to map and item to dict
     if (item.marker) item.marker.setMap(null);
+	console.log(item);
     //item.marker = setupSpawnMarker(item);
-    map_data.spawns[item.spawnpoint_id] = item;
+    map_data.spawns[item.encounter_id] = item;
   }
+console.log(item);
 }
 
 function processLuredPokemon(i, item) {
@@ -960,17 +962,17 @@ function processScanned(i, item) {
 
 function updateMap() {
   loadRawData().done(function(result) {
-    $.each(result.spawns, processSpawn);
     $.each(result.pokemons, processPokemons);
     $.each(result.pokestops, processPokestops);
     $.each(result.pokestops, processLuredPokemon);
     $.each(result.gyms, processGyms);
+    $.each(result.spawns, processSpawn);
     $.each(result.scanned, processScanned);
-    //showInBoundsMarkers(map_data.spawns);
     showInBoundsMarkers(map_data.pokemons);
     showInBoundsMarkers(map_data.lure_pokemons);
     showInBoundsMarkers(map_data.gyms);
     showInBoundsMarkers(map_data.pokestops);
+    showInBoundsMarkers(map_data.spawns);
     showInBoundsMarkers(map_data.scanned);
     clearStaleMarkers();
     if ($("#stats").hasClass("visible")) {
