@@ -823,6 +823,7 @@ function loadRawData() {
 }
 
 function processPokemons(i, item) {
+	console.log(item);
   if (!Store.get('showPokemon')) {
     return false; // in case the checkbox was unchecked in the meantime.
   }
@@ -839,6 +840,7 @@ function processPokemons(i, item) {
 }
 
 function processPokestops(i, item) {
+	console.log(item);
   if (!Store.get('showPokestops')) {
     return false;
   }
