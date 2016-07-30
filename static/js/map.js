@@ -880,8 +880,8 @@ console.log(item);
 console.log(map_data.spawns);
 
 	if (!(item.spawnpoint_id in map_data.spawns)) {
-		// if (item.marker) item.marker.setMap(null);
-		//item.marker = setupSpawnMarker(item);
+		if (item.marker) item.marker.setMap(null);
+		item.marker = setupSpawnMarker(item);
 		map_data.spawns[item.spawnpoint_id] = item;
 	}
 
