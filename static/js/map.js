@@ -671,25 +671,17 @@ function setupPokestopMarker(item) {
 }
 
 function setupSpawnMarker(item) {
-	/*
-  var imagename = "Pstop";
-  var marker = new google.maps.Marker({
-    position: {
-      lat: item.latitude,
-      lng: item.longitude,
-    },
-    map: map,
-    zIndex: 2,
-    optimized: false,
-    icon: 'static/forts/' + imagename + '.png',
-  });
-  */
   
   var circleCenter = new google.maps.LatLng(item.latitude, item.longitude);
 
   var marker = new google.maps.Circle({
+	position: {
+      lat: item.latitude,
+      lng: item.longitude,
+    },
     map: map,
 	zIndex: 1,
+	optimized: false,
     center: circleCenter,
     radius: 10, // 10 miles in metres
 	fillOpacity: 0.5,
@@ -700,7 +692,7 @@ function setupSpawnMarker(item) {
   });
   
   marker.infoWindow = new google.maps.InfoWindow({
-    content: spawnLabel(item.spawnpoint_id, item.disappear_time, item.latitude, item.longitude),
+    content: spawnLabel(item.spawnpoint_id, item.disappear_time, item.latitude + .003, item.longitude + .003),
     disableAutoPan: true
   });
 
