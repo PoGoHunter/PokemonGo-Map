@@ -60,6 +60,9 @@ class Pogom(Flask):
         if request.args.get('pokestops', 'false') == 'true':
             d['pokestops'] = Pokestop.get_stops(swLat, swLng, neLat, neLng)
 
+        if request.args.get('spawns', 'false') == 'true':
+            d['spawns'] = Pokespawn.get_spawns(swLat, swLng, neLat, neLng)
+
         if request.args.get('gyms', 'true') == 'true':
             d['gyms'] = Gym.get_gyms(swLat, swLng, neLat, neLng)
 

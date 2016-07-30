@@ -171,6 +171,42 @@ class Pokestop(BaseModel):
 
         return pokestops
 
+class Pokespawn(BaseModel):
+    pokestop_id = CharField(primary_key=True, max_length=50)
+    enabled = BooleanField()
+    latitude = DoubleField()
+    longitude = DoubleField()
+    last_modified = DateTimeField(index=True)
+    lure_expiration = DateTimeField(null=True, index=True)
+    active_pokemon_id = IntegerField(null=True)
+
+    class Meta:
+        indexes = ((('latitude', 'longitude'), False),)
+
+    @classmethod
+    def get_spawns(cls, swLat, swLng, neLat, neLng):
+        if swLat is None or swLng is None or neLat is None or neLng is None:
+            query = (Pokestop
+                     .select()
+                     .dicts())
+        else:
+            query = (Pokestop
+                     .select()
+                     .where((Pokestop.latitude >= swLat) &
+                            (Pokestop.longitude >= swLng) &
+                            (Pokestop.latitude <= neLat) &
+                            (Pokestop.longitude <= neLng))
+                     .dicts())
+
+        pokestops = []
+        for p in query:
+            if args.china:
+                p['latitude'], p['longitude'] = \
+                    transform_from_wgs_to_gcj(p['latitude'], p['longitude'])
+            pokestops.append(p)
+
+        return pokestops
+
 
 class Gym(BaseModel):
     UNCONTESTED = 0
