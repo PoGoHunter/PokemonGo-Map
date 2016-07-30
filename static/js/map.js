@@ -687,7 +687,7 @@ function setupSpawnMarker(item) {
       lng: item.longitude,
     },
     map: map,
-	zIndex: 2,
+	zIndex: 5,
 	optimized: false,
     center: circleCenter,
     radius: 5, // 10 miles in metres
@@ -699,8 +699,12 @@ function setupSpawnMarker(item) {
   });
   
   marker.infoWindow = new google.maps.InfoWindow({
-    content: spawnLabel(item.spawnpoint_id, item.disappear_time, item.latitude + .03, item.longitude + .003),
-    disableAutoPan: true
+    content: spawnLabel(item.spawnpoint_id, item.disappear_time, item.latitude, item.longitude),
+    disableAutoPan: true,
+	position: {
+      lat: item.latitude + .003,
+      lng: item.longitude,
+    },
   });
 
   addListeners(marker);
