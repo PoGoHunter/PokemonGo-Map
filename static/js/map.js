@@ -671,6 +671,7 @@ function setupPokestopMarker(item) {
 }
 
 function setupSpawnMarker(item) {
+	/*
   var imagename = "Pstop";
   var marker = new google.maps.Marker({
     position: {
@@ -682,9 +683,24 @@ function setupSpawnMarker(item) {
     optimized: false,
     icon: 'static/forts/' + imagename + '.png',
   });
+  */
+  
+  var circleCenter = new google.maps.LatLng(item.latitude, item.longitude);
+
+  var marker = new google.maps.Circle({
+    map: map,
+	zIndex: 1,
+    center: circleCenter,
+    radius: 10, // 10 miles in metres
+	fillOpacity: 0.5,
+    fillColor: getColorByDate(item.disappear_time - 900),
+    strokeColor: getColorByDate(item.disappear_time + 900),
+    strokeOpacity: 0.8,
+    strokeWeight: 2
+  });
   
   marker.infoWindow = new google.maps.InfoWindow({
-    content: spawnLabel(item.spawnpoint_id, item.disappear_time, item.latitude + .003, item.longitude + .003),
+    content: spawnLabel(item.spawnpoint_id, item.disappear_time, item.latitude, item.longitude),
     disableAutoPan: true
   });
 
@@ -693,29 +709,6 @@ function setupSpawnMarker(item) {
   return marker;
 }
 
-function setupPokespawnMarker(item) {
-  var imagename = "Pstop";
-  var marker = new google.maps.Marker({
-    position: {
-      lat: item.latitude,
-      lng: item.longitude,
-    },
-    map: map,
-    zIndex: 3,
-    optimized: false,
-    icon: 'static/forts/' + imagename + '.png',
-  });
-
-  /*
-  marker.infoWindow = new google.maps.InfoWindow({
-    content: pokestopLabel(!!item.lure_expiration, item.last_modified, item.active_pokemon_id, item.latitude + .003, item.longitude + .003),
-    disableAutoPan: true
-  });
-  */
-
-  addListeners(marker);
-  return marker;
-}
 
 function getColorByDate(value) {
   //Changes the color from red to green over 15 mins
