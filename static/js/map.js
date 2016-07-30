@@ -520,6 +520,22 @@ function pokestopLabel(lured, last_modified, active_pokemon_id, latitude, longit
   return str;
 }
 
+function spawnLabel(spawnpoint_id, disappear_time, latitude, longitude) {
+  var str;
+    str = `
+      <div>
+        <b>Spawn point</b>
+      </div>
+      <div>
+        Location: ${latitude.toFixed(6)}, ${longitude.toFixed(7)}
+      </div>
+      <div>
+        <a href='https://www.google.com/maps/dir/Current+Location/${latitude},${longitude}' target='_blank' title='View in Maps'>Get directions</a>
+      </div>`;
+
+  return str;
+}
+
 function scannedLabel(last_modified) {
   scanned_date = new Date(last_modified)
 
@@ -655,6 +671,13 @@ function setupSpawnMarker(item) {
     optimized: false,
     icon: 'static/forts/' + imagename + '.png',
   });
+  
+  marker.infoWindow = new google.maps.InfoWindow({
+    content: spawnLabel(item.spawnpoint_id, item.disappear_time, item.latitude + .003, item.longitude + .003),
+    disableAutoPan: true
+  });
+
+  addListeners(marker);
 
   return marker;
 }
