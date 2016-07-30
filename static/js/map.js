@@ -960,13 +960,13 @@ function processScanned(i, item) {
 
 function updateMap() {
   loadRawData().done(function(result) {
-    $.each(result.spawns, processPokespawn);
+    //$.each(result.spawns, processPokespawn);
     $.each(result.pokemons, processPokemons);
     $.each(result.pokestops, processPokestops);
     $.each(result.pokestops, processLuredPokemon);
     $.each(result.gyms, processGyms);
     $.each(result.scanned, processScanned);
-    showInBoundsMarkers(map_data.spawns);
+    //showInBoundsMarkers(map_data.spawns);
     showInBoundsMarkers(map_data.pokemons);
     showInBoundsMarkers(map_data.lure_pokemons);
     showInBoundsMarkers(map_data.gyms);
