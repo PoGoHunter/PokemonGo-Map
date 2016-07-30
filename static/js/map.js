@@ -32,6 +32,7 @@ var selectedStyle = 'light';
 
 var map_data = {
   pokemons: {},
+  spawns: {},
   gyms: {},
   pokestops: {},
   lure_pokemons: {},
