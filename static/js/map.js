@@ -680,13 +680,13 @@ function setupSpawnMarker(item) {
       lng: item.longitude,
     },
     map: map,
-	zIndex: 1,
+	zIndex: 2,
 	optimized: false,
     center: circleCenter,
     radius: 10, // 10 miles in metres
 	fillOpacity: 0.5,
-    fillColor: getColorByDate(item.disappear_time - 900),
-    strokeColor: getColorByDate(item.disappear_time + 900),
+    fillColor: getColorByDate(item.disappear_time),
+    strokeColor: getColorByDate(item.disappear_time + 900000),
     strokeOpacity: 0.8,
     strokeWeight: 2
   });
