@@ -949,6 +949,7 @@ function processPokestops(i, item) {
 
 function processSpawn(i, item) {
   if (!Store.get('showSpawns')) {
+	if (item.marker) item.marker.setMap(null);
 	delete map_data.spawns[item.spawnpoint_id];
     return false;
   }
@@ -959,6 +960,7 @@ function processSpawn(i, item) {
 		map_data.spawns[item.spawnpoint_id] = item;
 	} else {
 		if (item.marker) item.marker.setMap(null);
+		delete map_data.spawns[item.spawnpoint_id];
 		item.marker = setupSpawnMarker(item);
 		map_data.spawns[item.spawnpoint_id] = item;
 	}
