@@ -522,10 +522,7 @@ function pokestopLabel(lured, last_modified, active_pokemon_id, latitude, longit
 }
 
 function spawnLabel(spawnpoint_id, disappear_time, latitude, longitude) {
-	
-	console.log(spawnpoint_id);
-	console.log(disappear_time);
-	
+
 	var disappear_time = disappear_time + 2700000;
 	var disappear_date = new Date(disappear_time);
 	
@@ -728,7 +725,6 @@ function getSpawnColor(value) {
 	
 	// final 
 	hue = hue.toString(10);
-	console.log([diff , " -- " , hue].join(""));
 
 	// 0m to spawn - blue
 	// 5m to spawn - green
@@ -827,6 +823,14 @@ function clearStaleMarkers() {
     if (map_data.scanned[key]['last_modified'] < (new Date().getTime() - 15 * 60 * 1000)) {
       map_data.scanned[key].marker.setMap(null);
       delete map_data.scanned[key];
+    }
+  });
+  
+  $.each(map_data.spawns, function(key, value) {
+    //If older than 30mins remove
+    if (map_data.spawns[key]['disappear_time'] < (new Date().getTime() - 30 * 60 * 1000)) {
+      map_data.spawns[key].marker.setMap(null);
+      delete map_data.spawns[key];
     }
   });
 }
@@ -945,7 +949,7 @@ function processPokestops(i, item) {
 
 function processSpawn(i, item) {
   if (!Store.get('showSpawns')) {
-	if (item.marker) item.marker.setMap(null);
+	delete map_data.spawns[item.spawnpoint_id];
     return false;
   }
 
@@ -956,7 +960,7 @@ function processSpawn(i, item) {
 	} else {
 		if (item.marker) item.marker.setMap(null);
 		item.marker = setupSpawnMarker(item);
-		//map_data.spawns[item.spawnpoint_id] = item;
+		map_data.spawns[item.spawnpoint_id] = item;
 	}
 
 }
