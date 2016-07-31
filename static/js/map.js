@@ -715,20 +715,15 @@ function getSpawnColor(value) {
 	var diff = 60 - (Date.now() - value + 900000) / 1000 / 60;
 	var hue = 200;
 	
-	// 0..5
 	if (diff > 0) hue = (200 - diff * 33);
 	
-	// 5..10
 	if (diff > 3) hue = (100 - (diff - 3) * 16.66);
 	
-	// 10..15
-	if (diff > 6) hue = (50 - (diff - 6) * 16.66);
+	if (diff > 6) hue = (50 - (diff - 6) * 5.55);
 	
-	// 15..45
-	if (diff > 9) hue = 0;
+	if (diff > 15) hue = 0;
 	
-	// 45..60
-	if (diff > 45) hue = 200;
+	if (diff > 45) hue = 200 + (60 - diff) * 5;
 	
 	
 	// final 
@@ -954,6 +949,10 @@ function processSpawn(i, item) {
   }
 
 	if (!(item.spawnpoint_id in map_data.spawns)) {
+		if (item.marker) item.marker.setMap(null);
+		item.marker = setupSpawnMarker(item);
+		map_data.spawns[item.spawnpoint_id] = item;
+	} else {
 		if (item.marker) item.marker.setMap(null);
 		item.marker = setupSpawnMarker(item);
 		map_data.spawns[item.spawnpoint_id] = item;
