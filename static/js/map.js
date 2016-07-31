@@ -952,7 +952,6 @@ function processPokestops(i, item) {
   }
 }
 
-window.last_refresh = 0;
 function processSpawn(i, item) {
 	if (!Store.get('showSpawns')) {
 		return false;
@@ -962,14 +961,17 @@ function processSpawn(i, item) {
 		if (item.marker) item.marker.setMap(null);
 		item.marker = setupSpawnMarker(item);
 		map_data.spawns[item.spawnpoint_id] = item;
+		map_data.spawns[item.spawnpoint_id].marker.last_refresh = 0;
 	} else {
 		if (map_data.spawns[item.spawnpoint_id].marker) {
 			if (item.marker) item.marker.setMap(null);
 			map_data.spawns[item.spawnpoint_id].marker.fillColor = getSpawnColor(item.disappear_time);
-			if (window.last_refresh < (new Date()).getTime() - 10) {
+			if ((typeof map_data.spawns[item.spawnpoint_id].marker.last_refresh == 'undefined'))
+				map_data.spawns[item.spawnpoint_id].marker.last_refresh = (new Date()).getTime();
+			if (map_data.spawns[item.spawnpoint_id].marker.last_refresh < (new Date()).getTime() - Math.random() * 20000) {
 				map_data.spawns[item.spawnpoint_id].marker.setVisible(false);
 				map_data.spawns[item.spawnpoint_id].marker.setVisible(true);
-				window.last_refresh = (new Date()).getTime();
+				map_data.spawns[item.spawnpoint_id].marker.last_refresh = (new Date()).getTime();
 			}
 		}
 	}
