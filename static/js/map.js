@@ -725,6 +725,7 @@ function getSpawnColor(value) {
 	
 	// final 
 	hue = hue.toString(10);
+	
 
 	// 0m to spawn - blue
 	// 5m to spawn - green
@@ -948,23 +949,22 @@ function processPokestops(i, item) {
 }
 
 function processSpawn(i, item) {
-  if (!Store.get('showSpawns')) {
-	if (item.marker) item.marker.setMap(null);
-	delete map_data.spawns[item.spawnpoint_id];
-    return false;
-  }
-
+	if (!Store.get('showSpawns')) {
+		return false;
+	}
+	
 	if (!(item.spawnpoint_id in map_data.spawns)) {
 		if (item.marker) item.marker.setMap(null);
 		item.marker = setupSpawnMarker(item);
 		map_data.spawns[item.spawnpoint_id] = item;
 	} else {
-		if (item.marker) item.marker.setMap(null);
-		delete map_data.spawns[item.spawnpoint_id];
-		item.marker = setupSpawnMarker(item);
-		map_data.spawns[item.spawnpoint_id] = item;
+		if (map_data.spawns[item.spawnpoint_id].marker) {
+			if (item.marker) item.marker.setMap(null);
+			map_data.spawns[item.spawnpoint_id].marker.fillColor = getSpawnColor(item.disappear_time);
+			map_data.spawns[item.spawnpoint_id].marker.setVisible(false);
+			map_data.spawns[item.spawnpoint_id].marker.setVisible(true);
+		}
 	}
-
 }
 
 function processLuredPokemon(i, item) {
