@@ -700,6 +700,10 @@ function setupSpawnMarker(item) {
       lat: item.latitude + .003,
       lng: item.longitude,
     },
+	pixelOffset: {
+		width: 0,
+		height: -10
+	}
   });
 
   addListeners(marker);
@@ -948,6 +952,7 @@ function processPokestops(i, item) {
   }
 }
 
+window.last_refresh = 0;
 function processSpawn(i, item) {
 	if (!Store.get('showSpawns')) {
 		return false;
@@ -961,8 +966,11 @@ function processSpawn(i, item) {
 		if (map_data.spawns[item.spawnpoint_id].marker) {
 			if (item.marker) item.marker.setMap(null);
 			map_data.spawns[item.spawnpoint_id].marker.fillColor = getSpawnColor(item.disappear_time);
-			map_data.spawns[item.spawnpoint_id].marker.setVisible(false);
-			map_data.spawns[item.spawnpoint_id].marker.setVisible(true);
+			if (window.last_refresh < (new Date()).getTime() - 10) {
+				map_data.spawns[item.spawnpoint_id].marker.setVisible(false);
+				map_data.spawns[item.spawnpoint_id].marker.setVisible(true);
+				window.last_refresh = (new Date()).getTime();
+			}
 		}
 	}
 }
