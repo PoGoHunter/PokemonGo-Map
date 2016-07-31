@@ -690,7 +690,7 @@ function setupSpawnMarker(item) {
 	zIndex: 5,
 	optimized: false,
     center: circleCenter,
-    radius: 5, // 10 miles in metres
+    radius: 7,
 	fillOpacity: 1,
     fillColor: getSpawnColor(item.disappear_time),
     strokeWeight: 0
@@ -945,6 +945,7 @@ function processPokestops(i, item) {
 
 function processSpawn(i, item) {
   if (!Store.get('showSpawns')) {
+	if (item.marker) item.marker.setMap(null);
     return false;
   }
 
@@ -955,7 +956,7 @@ function processSpawn(i, item) {
 	} else {
 		if (item.marker) item.marker.setMap(null);
 		item.marker = setupSpawnMarker(item);
-		map_data.spawns[item.spawnpoint_id] = item;
+		//map_data.spawns[item.spawnpoint_id] = item;
 	}
 
 }
