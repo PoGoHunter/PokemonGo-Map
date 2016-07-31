@@ -828,7 +828,7 @@ function clearStaleMarkers() {
   
   $.each(map_data.spawns, function(key, value) {
     //If older than 30mins remove
-    if (map_data.spawns[key]['disappear_time'] < (new Date().getTime() - 30 * 60 * 1000)) {
+    if (map_data.spawns[key]['disappear_time'] < (new Date().getTime() - 90 * 60 * 1000)) {
       map_data.spawns[key].marker.setMap(null);
       delete map_data.spawns[key];
     }
