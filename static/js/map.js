@@ -1441,6 +1441,17 @@ $(function() {
   $('#gyms-switch').change(buildSwitchChangeListener(map_data, ["gyms"], "showGyms"));
   $('#pokemon-switch').change(buildSwitchChangeListener(map_data, ["pokemons", "lure_pokemons"], "showPokemon"));
   $('#scanned-switch').change(buildSwitchChangeListener(map_data, ["scanned"], "showScanned"));
+  
+  
+    // implement crosshair
+    var crosshairShape = {coords:[0,0,0,0],type:'rect'};
+    var crossMarker = new google.maps.Marker({
+        map: map,
+        icon: 'https://www.daftlogic.com/images/cross-hairs.gif',
+        shape: crosshairShape
+    });
+    crossMarker.bindTo('position', map, 'center'); 
+
 
   $('#pokestops-switch').change(function() {
     var options = {
