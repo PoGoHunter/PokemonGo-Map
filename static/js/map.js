@@ -684,7 +684,7 @@ function setupSpawnMarker(item) {
       lng: item.longitude,
     },
     map: map,
-	zIndex: 5,
+	zIndex: 1,
 	optimized: false,
     center: circleCenter,
     radius: 7,
@@ -1048,14 +1048,14 @@ function processScanned(i, item) {
 
 function updateMap() {
   loadRawData().done(function(result) {
-    $.each(result.spawns, processSpawn);
     $.each(result.pokemons, processPokemons);
+    $.each(result.spawns, processSpawn);
     $.each(result.pokestops, processPokestops);
     $.each(result.pokestops, processLuredPokemon);
     $.each(result.gyms, processGyms);
     $.each(result.scanned, processScanned);
-    showInBoundsMarkers(map_data.spawns);
     showInBoundsMarkers(map_data.pokemons);
+    showInBoundsMarkers(map_data.spawns);
     showInBoundsMarkers(map_data.lure_pokemons);
     showInBoundsMarkers(map_data.gyms);
     showInBoundsMarkers(map_data.pokestops);
