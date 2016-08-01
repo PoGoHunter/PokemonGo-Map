@@ -184,19 +184,17 @@ class Pokespawn(BaseModel):
         if swLat is None or swLng is None or neLat is None or neLng is None:
             query = (Pokemon
                      .select()
-					 .distinct('spawnpoint_id')
                      .where((Pokemon.disappear_time > (datetime.utcnow() + timedelta(seconds=-604800))))
-                     .dicts())
+                     .dicts()).distinct()
         else:
             query = (Pokemon
                      .select()
-					 .distinct('spawnpoint_id')
                      .where((Pokemon.disappear_time > (datetime.utcnow() + timedelta(seconds=-604800))) &
                             (Pokemon.latitude >= swLat) &
                             (Pokemon.longitude >= swLng) &
                             (Pokemon.latitude <= neLat) &
                             (Pokemon.longitude <= neLng))
-                     .dicts())
+                     .dicts()).distinct()
 
         pokespawns = []
         for p in query:
