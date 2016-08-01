@@ -553,10 +553,11 @@ function spawnLabel(spawnpoint_id, disappear_time, latitude, longitude) {
         Location: ${latitude.toFixed(6)}, ${longitude.toFixed(7)}
       </div>
 	  <div>
-        Respawns at ${pad(disappear_date.getHours())}:${pad(disappear_date.getMinutes())}:${pad(disappear_date.getSeconds())}
+        Spawns at ${pad(disappear_date.getHours())}:${pad(disappear_date.getMinutes())}:${pad(disappear_date.getSeconds())}
         <span class='label-countdown' disappears-at='${disappear_time}'>(00m00s)</span>
       </div>
       <div>
+        <a href='javascript:centerSpawn("${spawnpoint_id}")'>Center</a>&nbsp;&nbsp;
         <a href='https://www.google.com/maps/dir/Current+Location/${latitude},${longitude}' target='_blank' title='View in Maps'>Get directions</a>
       </div>`;
 
@@ -715,12 +716,12 @@ function setupSpawnMarker(item) {
     content: spawnLabel(item.spawnpoint_id, item.disappear_time, item.latitude, item.longitude),
     disableAutoPan: true,
 	position: {
-      lat: item.latitude + .003,
+      lat: item.latitude,
       lng: item.longitude,
     },
 	pixelOffset: {
 		width: 0,
-		height: -10
+		height: (15 - map.zoom) * 5,
 	}
   });
 
@@ -735,26 +736,12 @@ function getSpawnColor(value) {
 	var hue = 200;
 	
 	if (diff > 0) hue = (200 - diff * 33);
-	
 	if (diff > 3) hue = (100 - (diff - 3) * 16.66);
-	
 	if (diff > 6) hue = (50 - (diff - 6) * 5.55);
-	
 	if (diff > 15) hue = 0;
-	
 	if (diff > 45) hue = 200 + (60 - diff) * 5;
 	
-	
-	// final 
 	hue = hue.toString(10);
-	
-
-	// 0m to spawn - blue
-	// 5m to spawn - green
-	// 10m to spawn - yellow
-	// 15m to spawn - red
-	// during spawn - blue
-	// 5m to despawn - purple
 	
 	return ["hsl(", hue, ",75%,50%)"].join("");
 
@@ -986,7 +973,7 @@ function processSpawn(i, item) {
 			map_data.spawns[item.spawnpoint_id].marker.fillColor = getSpawnColor(item.disappear_time);
 			if ((typeof map_data.spawns[item.spawnpoint_id].marker.last_refresh == 'undefined'))
 				map_data.spawns[item.spawnpoint_id].marker.last_refresh = (new Date()).getTime();
-			if (map_data.spawns[item.spawnpoint_id].marker.last_refresh < (new Date()).getTime() - Math.random() * 20000) {
+			if (map_data.spawns[item.spawnpoint_id].marker.last_refresh < (new Date()).getTime() - Math.random() * 30000) {
 				map_data.spawns[item.spawnpoint_id].marker.setVisible(false);
 				map_data.spawns[item.spawnpoint_id].marker.setVisible(true);
 				map_data.spawns[item.spawnpoint_id].marker.last_refresh = (new Date()).getTime();
