@@ -225,6 +225,10 @@ function removePokemonMarker(encounter_id) {
   map_data.pokemons[encounter_id].hidden = true;
 }
 
+function centerSpawn(spawnpoint_id) {
+  map.setCenter(map_data.spawns[spawnpoint_id].marker.position);
+}
+
 function initMap() {
   map = new google.maps.Map(document.getElementById('map'), {
     center: {
@@ -558,7 +562,8 @@ function spawnLabel(spawnpoint_id, disappear_time, latitude, longitude) {
       </div>
       <div>
         <a href='javascript:centerSpawn("${spawnpoint_id}")'>Center</a>&nbsp;&nbsp;
-        <a href='https://www.google.com/maps/dir/Current+Location/${latitude},${longitude}' target='_blank' title='View in Maps'>Get directions</a>
+        <a href='javascript:enableSpawn("${spawnpoint_id}")'>Enable</a>&nbsp;&nbsp;
+        <a href='javascript:disableSpawn("${spawnpoint_id}")'>Disable</a>&nbsp;&nbsp;
       </div>`;
 
   return str;
