@@ -45,7 +45,7 @@ def get_args():
                         default=7)
     parser.add_argument('-sd', '--scan-delay',
                         help='Time delay between requests in scan threads',
-                        type=float, default=4)
+                        type=float, default=10)
     parser.add_argument('-td', '--thread-delay',
                         help='Time delay between each scan thread loop',
                         type=float, default=4)
