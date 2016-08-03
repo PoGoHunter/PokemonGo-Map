@@ -42,16 +42,13 @@ def get_args():
     parser.add_argument('-l', '--location', type=parse_unicode,
                         help='Location, can be an address or coordinates')
     parser.add_argument('-st', '--step-limit', help='Steps', type=int,
-                        default=7)
+                        default=12)
     parser.add_argument('-sd', '--scan-delay',
                         help='Time delay between requests in scan threads',
                         type=float, default=10)
-    parser.add_argument('-td', '--thread-delay',
-                        help='Time delay between each scan thread loop',
-                        type=float, default=4)
     parser.add_argument('-ld', '--login-delay',
                         help='Time delay between each login attempt',
-                        type=float, default=4)
+                        type=float, default=5)
     parser.add_argument('-dc', '--display-in-console',
                         help='Display Found Pokemon in Console',
                         action='store_true', default=False)
@@ -107,6 +104,7 @@ def get_args():
     parser.add_argument('--db-user', help='Username for the database')
     parser.add_argument('--db-pass', help='Password for the database')
     parser.add_argument('--db-host', help='IP or hostname for the database')
+    parser.add_argument('--db-port', help='Port for the database', type=int, default=3306)
     parser.add_argument('--db-max_connections', help='Max connections for the database', type=int, default=5)
     parser.add_argument('-wh', '--webhook', help='Define URL(s) to POST webhook information to',
                         nargs='*', default=False, dest='webhooks')
