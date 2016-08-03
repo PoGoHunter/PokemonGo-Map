@@ -638,7 +638,9 @@ function setupPokemonMarker(item, skipNotification, isBounceDisabled) {
     disableAutoPan: true
   });
 
-  if (notifiedPokemon.indexOf(item.pokemon_id) > -1) {
+  var regularPokemon = ["Common", "Uncommon"];
+  
+  if ((notifiedPokemon.indexOf(item.pokemon_id) > -1) || (jQuery.inArray(item.pokemon_rarity, regularPokemon) < 0)) {
     if (!skipNotification) {
       if (Store.get('playSound')) {
         audio.play();
@@ -649,7 +651,7 @@ function setupPokemonMarker(item, skipNotification, isBounceDisabled) {
       marker.setAnimation(google.maps.Animation.BOUNCE);
     }
   }
-
+  
   addListeners(marker);
   return marker;
 }
@@ -1143,7 +1145,7 @@ function sendNotification(title, text, icon, lat, lng) {
       window.focus();
       notification.close();
 
-      centerMap(lat, lng, 20);
+      centerMap(lat, lng, 17);
     };
   }
 }
