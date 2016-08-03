@@ -1145,7 +1145,7 @@ function sendNotification(title, text, icon, lat, lng) {
       window.focus();
       notification.close();
 
-      centerMap(lat, lng, 17);
+      centerMap(lat, lng, 16);
     };
   }
 }
