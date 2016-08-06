@@ -1010,7 +1010,7 @@ function processSpawn(i, item) {
 			map_data.spawns[item.spawnpoint_id].marker.fillColor = getSpawnColor(item.disappear_time);
 			if ((typeof map_data.spawns[item.spawnpoint_id].marker.last_refresh == 'undefined'))
 				map_data.spawns[item.spawnpoint_id].marker.last_refresh = (new Date()).getTime();
-			if (map_data.spawns[item.spawnpoint_id].marker.last_refresh < (new Date()).getTime() - Math.random() * 30000) {
+			if (map_data.spawns[item.spawnpoint_id].marker.last_refresh < (new Date()).getTime() - Math.random() * 20000) {
 				map_data.spawns[item.spawnpoint_id].marker.setVisible(false);
 				map_data.spawns[item.spawnpoint_id].marker.setVisible(true);
 				map_data.spawns[item.spawnpoint_id].marker.last_refresh = (new Date()).getTime();
@@ -1506,7 +1506,6 @@ $(function() {
         $.each(data_type, function(d, d_type) {
           $.each(data[d_type], function (key, value) {
             data[d_type][key].marker.setMap(null);
-            console.log([data, data_type, data[d_type][key].marker.halo].join());
             if (data[d_type][key].marker.halo)
                 data[d_type][key].marker.halo.setMap(null);
           });
