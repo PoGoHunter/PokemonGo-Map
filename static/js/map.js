@@ -713,7 +713,7 @@ function setupSpawnMarker(item) {
       lng: item.longitude,
     },
     map: map,
-	zIndex: 1,
+	zIndex: 2,
 	optimized: false,
     center: circleCenter,
     radius: 7,
@@ -744,16 +744,21 @@ function getSpawnColor(value) {
 
 	var diff = 60 - (Date.now() - value + 900000) / 1000 / 60;
 	var hue = 200;
+    var transp = 0.25;
 	
 	if (diff > 0) hue = (200 - diff * 33);
 	if (diff > 3) hue = (100 - (diff - 3) * 16.66);
 	if (diff > 6) hue = (50 - (diff - 6) * 5.55);
 	if (diff > 15) hue = 0;
 	if (diff > 45) hue = 200 + (60 - diff) * 5;
+    
+    if (diff < 6) transp = 0.5;
+    if (diff > 45) transp = 1;
+
 	
 	hue = hue.toString(10);
 	
-	return ["hsl(", hue, ",75%,50%)"].join("");
+	return ["hsla(", hue, ",75%,50%,", transp ,")"].join("");
 
 }
 
