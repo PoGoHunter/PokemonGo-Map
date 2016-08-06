@@ -250,7 +250,7 @@ class Pokespawn(BaseModel):
             for s in pokespawns:
                 if s['spawnpoint_id'] == p['spawnpoint_id']:
                     p['unique'] = False
-                    pokespawns['spawnpoint_id'].append([p['pokemon_id']])
+                    pokespawns['spawnpoint_id']['levels'].append(p['pokemon_id'])
             if p['unique'] == True:
                 while p['disappear_time'] < (datetime.utcnow() + timedelta(seconds=-2700)):
                     p['disappear_time'] += timedelta(seconds=3600);
