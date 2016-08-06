@@ -722,6 +722,27 @@ function setupSpawnMarker(item) {
     strokeWeight: 0
   });
   
+  var diff = 60 - (Date.now() - item.disappear_time + 900000) / 1000 / 60;
+  if (diff > 45) {
+    marker.halo = new google.maps.Circle({
+        position: {
+          lat: item.latitude,
+          lng: item.longitude,
+        },
+        map: map,
+        zIndex: 1,
+        optimized: false,
+        center: circleCenter,
+        radius: 35,
+        fillOpacity: 0,
+        strokeWeight: 1,
+        strokeOpacity: 0.5,
+        strokeColor: getSpawnColor(item.disappear_time)
+      });
+
+  }
+  
+  
   marker.infoWindow = new google.maps.InfoWindow({
     content: spawnLabel(item.spawnpoint_id, item.disappear_time, item.latitude, item.longitude),
     disableAutoPan: true,
@@ -973,6 +994,7 @@ function processPokestops(i, item) {
 }
 
 function processSpawn(i, item) {
+   
 	if (!Store.get('showSpawns')) {
 		return false;
 	}
@@ -1484,6 +1506,9 @@ $(function() {
         $.each(data_type, function(d, d_type) {
           $.each(data[d_type], function (key, value) {
             data[d_type][key].marker.setMap(null);
+            console.log([data, data_type, data[d_type][key].marker.halo].join());
+            if (data[d_type][key].marker.halo)
+                data[d_type][key].marker.halo.setMap(null);
           });
           data[d_type] = {}
         });
@@ -1512,8 +1537,8 @@ $(function() {
         optimized: false,
         center: map.getCenter(),
         radius: 200,
-        fillOpacity: 0.25,
-        fillColor: "gray",
+        fillOpacity: 0.1,
+        fillColor: "green",
         strokeWeight: 1
       });
     crossMarker.bindTo('position', map, 'center'); 
