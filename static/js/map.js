@@ -1501,15 +1501,19 @@ $(function() {
         shape: crosshairShape
     });
     var visibleMarker = new google.maps.Circle({
+        position: map.getCenter(),
         map: map,
-        zIndex: 3,
+        zIndex: 1,
+        optimized: false,
+        center: map.getCenter(),
         radius: 200,
-        fillOpacity: 0.5,
-        fillColor: "#ffffff",
+        fillOpacity: 0.25,
+        fillColor: "gray",
         strokeWeight: 1
       });
     crossMarker.bindTo('position', map, 'center'); 
     visibleMarker.bindTo('position', map, 'center'); 
+    visibleMarker.bindTo('center', map, 'center'); 
 
 
   $('#pokestops-switch').change(function() {
