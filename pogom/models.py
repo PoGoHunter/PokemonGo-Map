@@ -231,30 +231,32 @@ class Pokespawn(BaseModel):
         if swLat is None or swLng is None or neLat is None or neLng is None:
             query = (Pokemon
                      .select()
-                     .where((Pokemon.disappear_time > (datetime.utcnow() + timedelta(seconds=-604800))))
                      .dicts())
         else:
             query = (Pokemon
                      .select()
-                     .where((Pokemon.disappear_time > (datetime.utcnow() + timedelta(seconds=-604800))) &
-                            (Pokemon.latitude >= swLat) &
+                     .where((Pokemon.latitude >= swLat) &
                             (Pokemon.longitude >= swLng) &
                             (Pokemon.latitude <= neLat) &
                             (Pokemon.longitude <= neLng))
                      .dicts())
 
         pokespawns = []
+        levels = []
         for p in query:
             if args.china:
                 p['latitude'], p['longitude'] = \
                     transform_from_wgs_to_gcj(p['latitude'], p['longitude'])
             p['unique'] = True
+            levels[p['spawnpoint_id']] = p['pokemon_id']
             for s in pokespawns:
                 if s['spawnpoint_id'] == p['spawnpoint_id']:
                     p['unique'] = False
             if p['unique'] == True:
                 while p['disappear_time'] < (datetime.utcnow() + timedelta(seconds=-2700)):
                     p['disappear_time'] += timedelta(seconds=3600);
+                p['levels'] = levels[p['spawnpoint_id']]
+                levels = []
                 pokespawns.append(p)
 
         return pokespawns
