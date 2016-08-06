@@ -242,21 +242,18 @@ class Pokespawn(BaseModel):
                      .dicts())
 
         pokespawns = []
-        levels = []
         for p in query:
             if args.china:
                 p['latitude'], p['longitude'] = \
                     transform_from_wgs_to_gcj(p['latitude'], p['longitude'])
             p['unique'] = True
-            levels[p['spawnpoint_id']] = p['pokemon_id']
             for s in pokespawns:
                 if s['spawnpoint_id'] == p['spawnpoint_id']:
                     p['unique'] = False
+                    pokespawns['spawnpoint_id'].append(p['pokemon_id'])
             if p['unique'] == True:
                 while p['disappear_time'] < (datetime.utcnow() + timedelta(seconds=-2700)):
                     p['disappear_time'] += timedelta(seconds=3600);
-                p['levels'] = levels[p['spawnpoint_id']]
-                levels = []
                 pokespawns.append(p)
 
         return pokespawns
