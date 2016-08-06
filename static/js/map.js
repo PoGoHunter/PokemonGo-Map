@@ -1500,7 +1500,16 @@ $(function() {
         icon: 'https://www.daftlogic.com/images/cross-hairs.gif',
         shape: crosshairShape
     });
+    var visibleMarker = new google.maps.Circle({
+        map: map,
+        zIndex: 3,
+        radius: 200,
+        fillOpacity: 0.5,
+        fillColor: "#ffffff",
+        strokeWeight: 1
+      });
     crossMarker.bindTo('position', map, 'center'); 
+    visibleMarker.bindTo('position', map, 'center'); 
 
 
   $('#pokestops-switch').change(function() {
