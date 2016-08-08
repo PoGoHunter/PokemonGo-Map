@@ -7,6 +7,9 @@ import shutil
 import logging
 import time
 import re
+from flask import Flask
+from flask_sslify import SSLify
+from OpenSSL import SSL
 
 # Currently supported pgoapi
 pgoapi_version = "1.1.6"
@@ -162,4 +165,6 @@ if __name__ == '__main__':
         while search_thread.is_alive():
             time.sleep(60)
     else:
-        app.run(threaded=True, use_reloader=False, debug=args.debug, host=args.host, port=args.port)
+        sslify = SSLify(app)
+        context = ('cert.pem', 'key.pem')
+        app.run(threaded=True, use_reloader=False, debug=args.debug, host=args.host, port=args.port, ssl_context=context)
